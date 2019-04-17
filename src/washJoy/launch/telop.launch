@@ -1,0 +1,18 @@
+<launch>
+
+	<node name="telopWash" type="telopWash.py" pkg="washJoy" output="screen"  />
+
+	<node name="serial_node1" type="serial_node.py" pkg="rosserial_python" output="screen">
+	   <param name="port" value="/dev/ttyACM0"/>
+        </node>
+
+	<node name="serial_node2" type="serial_node.py" pkg="rosserial_python" output="screen">
+	   <param name="port" value="/dev/ttyACM1"/>
+        </node>
+
+	<node pkg="rostopic" type="rostopic" name="run_motors" args="pub -r 50 /rumMotors std_msgs/Int16 1" output="screen"/>
+
+    
+</launch>
+
+

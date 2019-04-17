@@ -1,0 +1,8 @@
+prefix=/home/nvidia/WashBot/install
+
+Name: washJoy
+Description: Description of washJoy
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/nvidia/WashBot/install/lib 
+Requires: 

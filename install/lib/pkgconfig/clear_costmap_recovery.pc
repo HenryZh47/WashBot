@@ -1,0 +1,8 @@
+prefix=/home/nvidia/WashBot/install
+
+Name: clear_costmap_recovery
+Description: Description of clear_costmap_recovery
+Version: 1.16.2
+Cflags: -I/home/nvidia/WashBot/install/include
+Libs: -L/home/nvidia/WashBot/install/lib -lclear_costmap_recovery
+Requires: costmap_2d nav_core pluginlib roscpp tf2_ros

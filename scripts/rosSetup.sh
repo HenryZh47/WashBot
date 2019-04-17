@@ -1,0 +1,2 @@
+export ROS_MASTER_URI=http://nvidia@192.168.50.165:11311
+export ROS_IP=192.168.50.165

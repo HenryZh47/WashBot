@@ -1,0 +1,8 @@
+prefix=/home/nvidia/WashBot/install
+
+Name: voxel_grid
+Description: Description of voxel_grid
+Version: 1.16.2
+Cflags: -I/home/nvidia/WashBot/install/include
+Libs: -L/home/nvidia/WashBot/install/lib -lvoxel_grid
+Requires: roscpp
