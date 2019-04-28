@@ -12,8 +12,9 @@ from sensor_msgs.msg import Joy
 # axis 0 aka left stick horizonal controls angular speed
 
 def convertToInt(raw):
-    result = int(raw/2*25)
-    #if result < 0:
+    result = int(raw/25*200)
+    #if 0 < result < 2:
+#	result = 2
     #    result -= 50
     #else:
     #    result += 50
@@ -21,8 +22,8 @@ def convertToInt(raw):
 
 
 def callback(data):
-    leftWheelVel = data.axes[1]
-    rightWheelVel = data.axes[3]
+    leftWheelVel = data.axes[3]
+    rightWheelVel = data.axes[1]
     squirt = data.buttons[0]
     global lastSquirt
     if squirt > .5 and lastSquirt < .5:
@@ -42,9 +43,9 @@ def start():
     global pubSquirt
     global lastSquirt 
     lastSquirt = 0
-    pubLeft = rospy.Publisher('leftVel', Int16)
-    pubRight = rospy.Publisher('rightVel', Int16)
-    pubSquirt = rospy.Publisher('squirt', Int16)
+    pubLeft = rospy.Publisher('leftVel', Int16,queue_size=1)
+    pubRight = rospy.Publisher('rightVel', Int16,queue_size=1)
+    pubSquirt = rospy.Publisher('squirt', Int16,queue_size=1)
 
     # subscribed to joystick inputs on topic "joy"
     rospy.Subscriber("joy", Joy, callback)

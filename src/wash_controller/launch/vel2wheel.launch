@@ -1,6 +1,6 @@
 <launch>
 
-	<node name="telopWash" type="telopWash.py" pkg="washJoy" output="screen"  />
+	<node name="vel2wash" type="velocityTransfer.py" pkg="wash_controller" output="screen"  />
 
 	<node name="serial_node1" type="serial_node.py" pkg="rosserial_python" output="screen">
 	   <param name="port" value="/dev/ttyACM0"/>

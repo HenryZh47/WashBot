@@ -1,18 +1,58 @@
+<?xml version="1.0"?>
+
 <launch>
 
-   <master auto="start"/>
- <!-- Run the map server --> 
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find my_map_package)/my_map.pgm my_map_resolution"/>
+  <arg name="no_static_map" default="false"/>
+  <arg name="map_file" default="/home/nvidia/rvizs/washbot.yaml"/>
 
- <!--- Run AMCL --> 
-    <include file="$(find amcl)/examples/amcl_omni.launch" />
+  <node name="tfb" pkg="robot_setup_tf" type="tf_broadcaster" />
 
-   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <rosparam file="$(find my_robot_name_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
-    <rosparam file="$(find my_robot_name_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find my_robot_name_2dnav)/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find my_robot_name_2dnav)/global_costmap_params.yaml" command="load" /> 
-    <rosparam file="$(find my_robot_name_2dnav)/base_local_planner_params.yaml" command="load" />
- </node>
+  <node name="vel2wash" type="velocityTransfer.py" pkg="wash_controller" output="screen"  />
 
-</launch> 
+  <node name="serial_node1" type="serial_node.py" pkg="rosserial_python" output="screen">
+    <param name="port" value="/dev/ttyACM0"/>
+  </node>
+
+  <node name="serial_node2" type="serial_node.py" pkg="rosserial_python" output="screen">
+    <param name="port" value="/dev/ttyACM1"/>
+  </node>
+
+  <node pkg="rostopic" type="rostopic" name="run_motors" args="pub -r 30 /rumMotors std_msgs/Int16 1" output="screen"/>
+
+
+
+
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+  <!-- <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/> -->
+  <arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS"/>
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    
+
+    <rosparam file="$(find my_washbot_2dnav)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find my_washbot_2dnav)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find my_washbot_2dnav)/param/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find my_washbot_2dnav)/param/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find my_washbot_2dnav)/param/base_local_planner_params.yaml" command="load" />
+
+
+    <!-- param name="base_local_planner" value="$(arg base_local_planner)"/ --> 
+    <param name="controller_frequency" value="10.0" />
+    <!--param name="global_costmap/robot_base_frame" value="base_link" />
+    <param name="global_costmap/global_frame" value="map" /-->"
+    <param name="local_costmap/robot_base_frame" value="base_link" />
+
+    <param name="planner_frequency" value="1.0" />
+    <param name="planner_patience" value="1.0" />
+    <param name="controller_patience" value="2.0" />
+    <param name="controller_frequency" value="2" />
+    <param name="max_planning_retries" value="-1.0" />
+    <param name="recovery_behavior_enabled" value="false" />
+
+  </node>
+  
+  <!--node pkg="tf" type="transform_publisher" name="base_camera_broadcaster" args="1 0 0 0 0 0 1 camera_link base_link 100" /-->
+  <!--node pkg="tf" type="static_transform_publisher" name="odom_base_broadcaster" args="1 0 0 0 0 0 1 camera_link odom 100" /-->
+
+</launch>
