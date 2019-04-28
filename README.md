@@ -15,7 +15,7 @@ WashBot is a robotics capstone project at Carnegie Mellon University. The motiva
 [TODO]
 
 ## Documents
-* [Put documents here]
+* docs/connection-guide.md: connecting to WashBot
 
 ## Copyright and License
 This project is under GNU GENERAL PUBLIC LICENSE
