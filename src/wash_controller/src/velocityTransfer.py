@@ -33,7 +33,7 @@ def callback(data):
 
 
 def TransferVelocity(data):
-    wheel_distance = 0.5
+    wheel_distance = 0.53
     velocity = data.linear.x
     rotation = data.angular.z
     #right_speed = (rotation*wheel_distance)/2+velocity
