@@ -1,6 +1,9 @@
 # WashBot
 WashBot is a robotics capstone project at Carnegie Mellon University. The motivation of the project is to autonomously clean a designated driveway without human guidance, saving time, cost and ensuring safety for human operators.
 
+## Demo Video
+[Here](https://youtu.be/oqM4e429ca8) is a demo video of WashBot.
+
 ## Software Architecture
 ![software architecture](./docs/images/overall_design.png)
 
